@@ -1,0 +1,47 @@
+<div class="card">
+  <h2>Tambah Item Baru</h2>
+  
+  {{#if error}}
+    <div class="message error">{{error}}</div>
+  {{/if}}
+
+  <form method="POST" action="/add" style="margin-top: 20px;">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Nama Item <span style="color: red;">*</span></label>
+        <input type="text" id="name" name="name" required placeholder="Contoh: Laptop">
+      </div>
+      <div class="form-group">
+        <label for="category">Kategori</label>
+        <select id="category" name="category">
+          <option value="">Pilih Kategori</option>
+          <option value="Elektronik">Elektronik</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Stationery">Alat Tulis</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Deskripsi</label>
+      <textarea id="description" name="description" placeholder="Masukkan deskripsi item..."></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="quantity">Jumlah Stok <span style="color: red;">*</span></label>
+        <input type="number" id="quantity" name="quantity" required min="0" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="price">Harga (Rp) <span style="color: red;">*</span></label>
+        <input type="number" id="price" name="price" required min="0" step="0.01" placeholder="0">
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-top: 30px;">
+      <button type="submit" class="btn btn-success">Simpan Item</button>
+      <a href="/" class="btn" style="background: var(--gray); color: white;">Batal</a>
+    </div>
+  </form>
+</div>

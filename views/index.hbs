@@ -1,0 +1,51 @@
+<div class="header-actions">
+  <h2 >Daftar Inventori</h2>
+  <a href="/add" class="btn btn-primary">+ Tambah Item Baru</a>
+</div>
+
+{{#if items}}
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Item</th>
+          <th>Kategori</th>
+          <th>Deskripsi</th>
+          <th>Stok</th>
+          <th>Harga</th>
+          <th>Total Nilai</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+        <tr>
+          <td><strong>{{this.name}}</strong></td>
+          <td>{{this.category}}</td>
+          <td>{{this.description}}</td>
+          <td>
+              {{this.quantity}} unit
+          </td>
+          <td><span class="price-badge">Rp {{this.price}}</span></td>
+          <td><strong>Rp {{multiply this.quantity this.price}}</strong></td>
+          <td>
+            <div class="action-buttons">
+              <a href="/edit/{{this.id}}" class="btn btn-warning">Edit</a>
+              <a href="/delete/{{this.id}}" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{else}}
+  <div class="card">
+    <div class="empty-state">
+      <h2>Tidak ada item</h2>
+      <p>Mulai dengan menambahkan item baru ke inventori Anda</p>
+      <a href="/add" class="btn btn-primary" style="margin-top: 20px;">+ Tambah Item</a>
+    </div>
+  </div>
+{{/if}}
+
