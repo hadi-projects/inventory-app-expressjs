@@ -12,12 +12,14 @@
         <input type="text" id="name" name="name" required placeholder="Contoh: Laptop" value="{{item.name}}">
       </div>
       <div class="form-group">
-        <label for="category">Kategori</label>
-        <select id="category" name="category">
+        <label for="brand">Brand</label>
+        <select id="brand" name="category">
           <option value="">Pilih Kategori</option>
-          <option value="Elektronik" {{#if (eq item.category 'Elektronik')}}selected{{/if}}>Elektronik</option>
-          <option value="Furniture" {{#if (eq item.category 'Furniture')}}selected{{/if}}>Furniture</option>
-          <option value="Stationery" {{#if (eq item.category 'Stationery')}}selected{{/if}}>Alat Tulis</option>
+          <option value="HP" {{#if (eq item.category 'HP')}}selected{{/if}}>HP</option>
+          <option value="Lenovo" {{#if (eq item.category 'Lenovo')}}selected{{/if}}>Lenovo</option>
+          <option value="Asus" {{#if (eq item.category 'Asus')}}selected{{/if}}>Asus</option>
+          <option value="Dell" {{#if (eq item.category 'Dell')}}selected{{/if}}>Dell</option>
+          <option value="MSI" {{#if (eq item.category 'MSI')}}selected{{/if}}>MSI</option>
           <option value="Lainnya" {{#if (eq item.category 'Lainnya')}}selected{{/if}}>Lainnya</option>
         </select>
       </div>
