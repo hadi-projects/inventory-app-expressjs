@@ -16,7 +16,8 @@ app.engine('hbs', exphbs.engine({
   defaultLayout: 'layout',
   helpers: {
     multiply: (a, b) => a * b,
-    eq: (a, b) => a === b
+    eq: (a, b) => a === b,
+    json: (context) => JSON.stringify(context)
   }
 }));
 

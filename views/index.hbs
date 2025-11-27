@@ -1,6 +1,71 @@
 <div class="header-actions">
-  <h2 >Daftar Inventori</h2>
+  <h2>Daftar Inventori</h2>
   <a href="/add" class="btn btn-primary">+ Tambah Item Baru</a>
+</div>
+
+<!-- <CHANGE> Tambahkan section statistik dashboard -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon"></div>
+    <div class="stat-content">
+      <h3>Total Item</h3>
+      <p class="stat-value">{{stats.totalItems}}</p>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon"></div>
+    <div class="stat-content">
+      <h3>Total Stok</h3>
+      <p class="stat-value">{{stats.totalQuantity}}</p>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon"></div>
+    <div class="stat-content">
+      <h3>Total Nilai</h3>
+      <p class="stat-value">Rp {{stats.totalValue}}</p>
+    </div>
+  </div>
+
+  {{!-- <div class="stat-card">
+    <div class="stat-icon"></div>
+    <div class="stat-content">
+      <h3>Harga Rata-rata</h3>
+      <p class="stat-value">Rp {{stats.averagePrice}}</p>
+    </div>
+  </div> --}}
+</div>
+
+<!-- <CHANGE> Tambahkan charts section -->
+<div class="charts-grid">
+  <div class="card">
+    <h3>Stok Berdasarkan Kategori</h3>
+    <canvas id="categoryQuantityChart"></canvas>
+  </div>
+  
+  <div class="card">
+    <h3>Nilai Berdasarkan Kategori</h3>
+    <canvas id="categoryValueChart"></canvas>
+  </div>
+</div>
+
+<!-- <CHANGE> Tambahkan form pencarian di atas tabel -->
+<div class="search-section">
+  <form method="GET" action="/" class="search-form">
+    <input 
+      type="text" 
+      name="search" 
+      placeholder="Cari berdasarkan nama, kategori, atau deskripsi..." 
+      value="{{searchQuery}}"
+      class="search-input"
+    >
+    <button type="submit" class="btn btn-primary">Cari</button>
+    {{#if searchQuery}}
+      <a href="/" class="btn" style="background: var(--gray); color: white;">Reset</a>
+    {{/if}}
+  </form>
 </div>
 
 {{#if items}}
@@ -24,7 +89,6 @@
           <td>{{this.category}}</td>
           <td>{{this.description}}</td>
           <td>
-              {{this.quantity}} unit
           </td>
           <td><span class="price-badge">Rp {{this.price}}</span></td>
           <td><strong>Rp {{multiply this.quantity this.price}}</strong></td>
@@ -43,9 +107,74 @@
   <div class="card">
     <div class="empty-state">
       <h2>Tidak ada item</h2>
-      <p>Mulai dengan menambahkan item baru ke inventori Anda</p>
+      <p>{{#if searchQuery}}Tidak ada hasil pencarian{{else}}Mulai dengan menambahkan item baru ke inventori Anda{{/if}}</p>
       <a href="/add" class="btn btn-primary" style="margin-top: 20px;">+ Tambah Item</a>
     </div>
   </div>
 {{/if}}
 
+<!-- <CHANGE> Tambahkan script untuk Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const stats = {{{json stats}}};
+  
+  // Chart 1: Stok Berdasarkan Kategori
+  const ctx1 = document.getElementById('categoryQuantityChart').getContext('2d');
+  new Chart(ctx1, {
+    type: 'doughnut',
+    data: {
+      labels: stats.categoryLabels,
+      datasets: [{
+        data: stats.categoryQuantities,
+        backgroundColor: [
+          '#3b82f6',
+          '#10b981',
+          '#f59e0b',
+          '#ef4444',
+          '#8b5cf6',
+          '#ec4899'
+        ],
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+
+  // Chart 2: Nilai Berdasarkan Kategori
+  const ctx2 = document.getElementById('categoryValueChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: stats.categoryLabels,
+      datasets: [{
+        label: 'Nilai (Rp)',
+        data: stats.categoryValues,
+        backgroundColor: '#3b82f6',
+        borderColor: '#1e40af',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'x',
+      plugins: {
+        legend: {
+          display: true
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
